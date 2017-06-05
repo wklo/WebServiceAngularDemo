@@ -8,5 +8,10 @@ import { Globals } from '../globals';
 })
 
 export class HomeComponent {
-    constructor(public myGlobals: Globals) { }
+
+    constructor(private myGlobals: Globals) {} 
+
+    get loggedInUser(): User {
+        return this.myGlobals.loggedInUser;
+    }
 }
