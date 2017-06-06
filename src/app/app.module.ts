@@ -9,8 +9,8 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { Globals } from './globals';
 import { AlertComponent, LoggedInUserComponent, LoginComponent, 
-         HomeComponent } from './components/index';
-import { AlertService, AuthenticationService, DestinyOneService } from './services/index';
+         HomeComponent, SearchStudentsComponent, StudentProfileComponent } from './components/index';
+import { AlertService, AuthenticationService, DestinyOneService, StudentService } from './services/index';
 
 @NgModule({
   imports: [
@@ -24,13 +24,16 @@ import { AlertService, AuthenticationService, DestinyOneService } from './servic
     AlertComponent,
     LoggedInUserComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    SearchStudentsComponent,
+    StudentProfileComponent
   ],
   providers: [
     AlertService,
     AuthenticationService, 
     DestinyOneService,
-    Globals
+    Globals,
+    StudentService
   ],
   bootstrap: [AppComponent]
 })
