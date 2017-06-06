@@ -5,8 +5,10 @@ import { Globals } from '../globals';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { Student } from '../models/index';
-
+import { Student, Certificate, StudentCertificateEnrollment, 
+         GetStudentCertificateEnrollmentsRequest, GetStudentCertificateEnrollmentsRequestDetail,
+         DropStudentFromCertificateRequest, DropStudentFromCertificateRequestDetail,
+         EnrollStudentInCertificateRequest, EnrollStudentInCertificateRequestDetail } from '../models/index';
 
 @Injectable()
 export class DestinyOneService {
@@ -58,7 +60,65 @@ export class DestinyOneService {
     }
 
 
+    getCertificates(): Observable<Certificate[]> {
+        return this.http.get(
+            this.getPublicRESTfulUrl('certificates')
+        ).map((response: Response) => {
+            console.log(response.json().certificate);
+            return response.json().certificate;
+        }).catch((error: Response) => {
+            console.log(error.toString());
+            return Observable.throw(error.toString());
+        });
+    }
 
+
+
+    getStudentCertificateEnrollments(student: Student): Observable<StudentCertificateEnrollment[]> {
+        return this.http.post(
+            this.getInternalRESTfulUrl('getStudentCertificateEnrollments'),
+            this.createGetStudentCertificateEnrollmentsRequestPayload(student.objectId),
+            this.createRequestOptions('application/json')
+        ).map((response: Response) => {            
+            console.log(response);
+            return response.json().getStudentCertificateEnrollmentsResult.enrolledCertificates.enrolledCertificate;
+        }).catch((error: Response) => {
+            console.log(error.toString());
+            return Observable.throw(error.toString());
+        });
+    }
+
+    
+    dropStudentFromCertificate(student: Student, certificateCode: string) {
+        return this.http.post(
+            this.getInternalRESTfulUrl('dropStudentFromCertificate'),
+            this.createDropStudentFromCertificateRequestPayload(student.objectId, certificateCode),
+            this.createRequestOptions('application/json')
+        ).map((response: Response) => {
+            console.log(response.json());
+            return response.json();
+        }).catch((error: Response) => {
+            console.log(error.text());
+            return Observable.throw(error.text());
+        });
+    }
+
+    
+    enrollStudentInCertificate(student: Student, certificate: Certificate) {
+        return this.http.post(
+            this.getInternalRESTfulUrl('enrollStudentInCertificate'),
+            this.createEnrollStudentInCertificateRequestPayload(student.objectId, certificate.code),
+            this.createRequestOptions('application/json')
+        ).map((response: Response) => {
+            console.log(response.json());
+            return response.json();
+        }).catch((error: Response) => {
+            console.log(error.text());
+            return Observable.throw(error.text());
+        });
+    }
+
+    
     private getInternalRESTfulUrl(method: string, extraParameters?: Map<string, any>) {
         let currentUserSessionId = this.myGlobals.loggedInUserSessionId;
         let restfulUrl = this.myGlobals.destinyOneInternalWebServiceRESTfulUrl + '/' + method + '?_type=json&sessionId=' + currentUserSessionId;
@@ -94,6 +154,52 @@ export class DestinyOneService {
 
         return payload;
     }
+
+
+    private createGetStudentCertificateEnrollmentsRequestPayload(studentId: number) {
+        let getStudentCertificateEnrollmentsRequestDetail = new GetStudentCertificateEnrollmentsRequestDetail();
+        getStudentCertificateEnrollmentsRequestDetail.matchOn = "objectId";
+        getStudentCertificateEnrollmentsRequestDetail.attributeValue = studentId.toString();
+
+        let getStudentCertificateEnrollmentsRequest = new GetStudentCertificateEnrollmentsRequest();
+        getStudentCertificateEnrollmentsRequest.getStudentCertificateEnrollmentsRequestDetail = getStudentCertificateEnrollmentsRequestDetail;
+
+        let payload = JSON.stringify(getStudentCertificateEnrollmentsRequest);
+        console.log('getStudenCertificateEnrollmentsRequest payload: ' + payload);
+        return payload;
+    }
+
+
+    private createEnrollStudentInCertificateRequestPayload(studentId: number, certificateCode: string) {
+        let enrollStudentInCertificateRequestDetail = new EnrollStudentInCertificateRequestDetail();
+        enrollStudentInCertificateRequestDetail.certificateCode = certificateCode;
+        enrollStudentInCertificateRequestDetail.matchOn = "objectId";
+        enrollStudentInCertificateRequestDetail.attributeValue = studentId.toString();
+
+        let enrollStudentInCertificateRequest = new EnrollStudentInCertificateRequest();
+        enrollStudentInCertificateRequest.enrollStudentInCertificateRequestDetail = enrollStudentInCertificateRequestDetail;
+
+        let payload = JSON.stringify(enrollStudentInCertificateRequest);
+        console.log('createEnrollStudentInCertificateRequest payload: ' + payload);
+        return payload;
+    }
+
+
+    private createDropStudentFromCertificateRequestPayload(studentId: number, certificateCode: string) {
+        let dropStudentFromCertificateRequestDetail = new DropStudentFromCertificateRequestDetail();
+        dropStudentFromCertificateRequestDetail.certificateCode = certificateCode;
+        dropStudentFromCertificateRequestDetail.matchOn = "objectId";
+        dropStudentFromCertificateRequestDetail.attributeValue = studentId.toString();
+
+        let dropStudentFromCertificateRequest = new DropStudentFromCertificateRequest();
+        dropStudentFromCertificateRequest.dropStudentFromCertificateRequestDetail = dropStudentFromCertificateRequestDetail;
+
+        let payload = JSON.stringify(dropStudentFromCertificateRequest);
+        console.log('createDropStudentFromCertificateRequest payload: ' + payload);
+        return payload;
+    }
+
+
 
     private createRequestOptions(contentType: string) {
         let headers = new Headers({ 'Content-Type': contentType, 'Accept': 'application/json' });

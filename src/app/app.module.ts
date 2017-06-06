@@ -9,7 +9,9 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { Globals } from './globals';
 import { AlertComponent, LoggedInUserComponent, LoginComponent, 
-         HomeComponent, SearchStudentsComponent, StudentProfileComponent } from './components/index';
+         HomeComponent, SearchStudentsComponent, StudentProfileComponent,
+        StudentCertificateEnrollmentsComponent } from './components/index';
+        
 import { AlertService, AuthenticationService, DestinyOneService, StudentService } from './services/index';
 
 @NgModule({
@@ -26,7 +28,8 @@ import { AlertService, AuthenticationService, DestinyOneService, StudentService 
     LoginComponent,
     HomeComponent,
     SearchStudentsComponent,
-    StudentProfileComponent
+    StudentProfileComponent,
+    StudentCertificateEnrollmentsComponent
   ],
   providers: [
     AlertService,
