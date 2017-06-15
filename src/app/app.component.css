@@ -1,0 +1,32 @@
+/* This styles buttons and various elements across the app to use Destiny Red
+/deep/ annotation is required by Angular2 so these styles apply to all child compenents
+Child components were not defined to apply the core app.component styles
+*/
+/deep/ .bg-primary,
+/deep/ button, /deep/ .btn,
+/deep/ .btn-primary,
+/deep/ .btn-primary:hover,
+/deep/ .btn-primary:active:hover,
+/deep/ .btn-primary:focus,
+/deep/ .btn-primary:active {
+  background-color: #b5201c;
+  border-color: #b5201c;
+}
+.grow-title {
+  display: block;
+  font-weight: bold;
+}
+nav {
+  background-color: #FFF;
+  border-color: #FFFFFF;
+  height:80px;
+}
+/deep/ a:hover,
+/deep/ a:active,
+/deep/ a {
+ color: #b5201c;
+}
+/deep/ .logout {
+  cursor: pointer;
+}
+
