@@ -9,8 +9,8 @@ Child components were not defined to apply the core app.component styles
 /deep/ .btn-primary:active:hover,
 /deep/ .btn-primary:focus,
 /deep/ .btn-primary:active {
-  background-color: #b5201c;
-  border-color: #b5201c;
+  background-color: #940A06;
+  border-color: #940A06;
 }
 .grow-title {
   display: block;
@@ -24,9 +24,11 @@ nav {
 /deep/ a:hover,
 /deep/ a:active,
 /deep/ a {
- color: #b5201c;
+ color: #940A06;
 }
 /deep/ .logout {
   cursor: pointer;
 }
-
+/deep/ table {
+  font-size: 16px;
+}

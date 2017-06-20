@@ -1,34 +1,38 @@
 <h2>Student Profie</h2>
 <div class="studentProfile">
-    <div class="row" style="font-weight:bold" >
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row" style="font-weight:bold" >
         <div class="col-md-3">Student Number</div>
         <div class="col-md-3">First Name</div>
         <div class="col-md-3">Last Name</div>
-        <div class="col-md-3">Login Id</div>
-    </div>
-    <div class="row">
+        <div class="col-md-3"></div>
+      </div>
+      <div class="row">
         <div class="col-md-3">{{currentStudent.personNumber}}</div>
         <div class="col-md-3">{{currentStudent.firstName1}}</div>
         <div class="col-md-3">{{currentStudent.lastName}}</div>
-        <div class="col-md-3">{{currentStudent.loginId}}</div>
-    </div>
-    <br/>
-    <div class="row" style="font-weight:bold" >
+        <div class="col-md-3"></div>
+      </div>
+      <br/>
+      <div class="row" style="font-weight:bold" >
+        <div class="col-md-3">Login Id</div>
         <div class="col-md-3">Communication Method</div>
         <div class="col-md-3">Email</div>
         <div class="col-md-3"></div>
-        <div class="col-md-3"></div>
-    </div>
-    <div class="row">
+      </div>
+      <div class="row">
+        <div class="col-md-3">{{currentStudent.loginId}}</div>
         <div class="col-md-3">{{currentStudent.communicationMethod}}</div>
         <div class="col-md-3">{{currentStudent.preferredEmail.emailAddress}}</div>
         <div class="col-md-3"></div>
-        <div class="col-md-3"></div>
+      </div>
     </div>
+  </div>
 </div>
 <br/>
 <div><button (click)="goBack()" class="btn btn-primary">Back</button></div>
 <br/>
 <p>
-<student-certificate-enrollments [currentStudent]="currentStudent"></student-certificate-enrollments>
+  <student-certificate-enrollments [currentStudent]="currentStudent"></student-certificate-enrollments>
 </p>
